@@ -74,6 +74,11 @@ const addWork = function (title, i, anim, addStorage) {
     div.className = 'works';
     div.id = 'works' + i;
     div.textContent = title;
+    div.title = 'Click to remove';
+
+    // Adding a onclick on the work so that whenever
+    // users click on that then that would gets removed
+    div.onclick = () => removeWork(i);
 
     span.className = 'works remove';
     span.id = 'remove' + i;
