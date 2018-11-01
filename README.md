@@ -5,7 +5,7 @@ In this ToDo Application every work gets added and removed with a cool animation
 This application is created with a viewpoint that it looks cool in every display sizes and even on mobile devices.
 
 Here is the app's screenshot:
-![ToDo Screenshot](https://i.stack.imgur.com/OFHNP.png)
+![ToDo Screenshot](https://i.stack.imgur.com/Ay6Dr.png)
 
 Cool, isn't it?
 
