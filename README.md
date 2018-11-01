@@ -2,7 +2,7 @@
 Here is a ToDo application designed with `HTML`, `CSS` and coded with core `JS`, all done by [HarshitSeksaria](https://github.com/HarshitSeksaria)
 
 In this ToDo Application every work gets added and removed with a cool animation, and the `UI` is also amazing.
-This application is created with a viewpoint that it looks cool in every display sizes and even on mobile devices.
+This application is created with keeping this point in mind that it should look cool in every display sizes and even on mobile devices.
 
 Here is the app's screenshot:
 ![ToDo Screenshot](https://i.stack.imgur.com/Ay6Dr.png)
