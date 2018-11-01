@@ -15,7 +15,7 @@ let works = 0;
 // Record of current works
 let workTitles = [];
 
-// function to add Typewrite effect
+// Function to add a beautiful TypeWriter effect
 const type = function(target, s, interval) {
     if (s.length === 0) {
         return;
@@ -102,7 +102,7 @@ const addWork = function (title, i, anim, addStorage) {
     }
 }
 
-// Function to prompt user to add new work.
+// Function to prompt user to add a new work
 const promptNewWork = function () {
     const newWork = prompt('Add new work.');
 
@@ -115,7 +115,7 @@ const promptNewWork = function () {
     renderWorks(true);
 }
 
-// Function to load works from localStorage.
+// Function to load works from localStorage
 const getWorks = function () {
     workTitles = 
     localStorage.getItem('works').length > 0
@@ -134,8 +134,8 @@ const getWorks = function () {
 // ClickListener for addButton
 addButton.addEventListener('click', () => promptNewWork());
 
-// Calling type() to start TypeWriter effect.
+// Calling type() to start TypeWriter effect
 type(title, "To-do Application", 250);
 
-// Calling getWorks() to take works from localStorage
+// Calling getWorks() to load works from localStorage
 getWorks();
