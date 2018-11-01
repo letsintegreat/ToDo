@@ -1,11 +1,13 @@
+/* Coded by Harshit Seksaria */
+
 // Instance of a div to add a work
-let addButton = document.getElementById("addbutton");
+const addButton = document.getElementById("addbutton");
 
 // Instance of work list
-let list = document.getElementById('workslist');
+const list = document.getElementById('workslist');
 
 // Instance of title div
-let title = document.getElementById('text');
+const title = document.getElementById('text');
 
 // Number of works
 let works = 0;
@@ -14,222 +16,126 @@ let works = 0;
 let workTitles = [];
 
 // function to add Typewrite effect
-let type = function() {
-    setTimeout(() => {
-        title.innerHTML += 'T';
-    }, 250);
+const type = function(target, s, interval) {
+    if (s.length === 0) {
+        return;
+    }
 
-    setTimeout(() => {
-        title.innerHTML += 'o';
-    }, 500);
-
-    setTimeout(() => {
-        title.innerHTML += '-';
-    }, 750);
-
-    setTimeout(() => {
-        title.innerHTML += 'd';
-    }, 1000);
-
-    setTimeout(() => {
-        title.innerHTML += 'o';
-    }, 1250);
-
-    setTimeout(() => {
-        title.innerHTML += ' ';
-    }, 1500);
-
-    setTimeout(() => {
-        title.innerHTML += 'A';
-    }, 1750);
-
-    setTimeout(() => {
-        title.innerHTML += 'p';
-    }, 2000);
-
-    setTimeout(() => {
-        title.innerHTML += 'p';
-    }, 2250);
-
-    setTimeout(() => {
-        title.innerHTML += 'l';
-    }, 2500);
-
-    setTimeout(() => {
-        title.innerHTML += 'i';
-    }, 2750);
-
-    setTimeout(() => {
-        title.innerHTML += 'c';
-    }, 3000);
-
-    setTimeout(() => {
-        title.innerHTML += 'a';
-    }, 3250);
-
-    setTimeout(() => {
-        title.innerHTML += 't';
-    }, 3500);
-
-    setTimeout(() => {
-        title.innerHTML += 'i';
-    }, 3750);
-
-    setTimeout(() => {
-        title.innerHTML += 'o';
-    }, 4000);
-
-    setTimeout(() => {
-        title.innerHTML += 'n';
-    }, 4250);
+    target.innerHTML += s[0];
+    return setTimeout(() => type(title, s.slice(1), interval), interval);
 }
 
-// Calling type() to start TypeWriter effect.
-type();
+// Function to remove any work at the given index
+const removeWork = function (i) {
+    const toBeDeleted = document.getElementById('item' + i);
+    if (workTitles.length === 1) {
+        workTitles.pop();
+    } else {
+        workTitles.splice(i, 1);
+    }
 
-// Fetch works form localStorage
-if (localStorage.getItem('works')) {
-    workTitles = localStorage.getItem('works').split(',');
-    workTitles.forEach(element => {
-        let currentTitle = element;
-        let entry = document.createElement('li');
+    toBeDeleted.style.transform = 'scale(0)'
+    setTimeout(function () {
+        renderWorks(false);
+    }, 1500);
 
-        let div = document.createElement('div');
-        div.className = 'works';
-        div.id = 'works' + works;
-        div.appendChild(document.createTextNode(currentTitle[0].toUpperCase() + currentTitle.slice(1)));
-        div.title = 'Click to remove';
+    setWorks();
+}
 
-        entry.appendChild(div);
+// Function to update work in localStorage
+const setWorks = function () {
+    localStorage.setItem('works', workTitles.toString());
+}
 
-        let span = document.createElement('span');
-        span.className = 'works remove'
-        span.id = 'remove' + works;
-
-        span.onclick = function() {
-            let toBeDeleted = document.getElementById('item' + this.id.split('remove')[1]);
-            if (workTitles.length != 1)
-                workTitles.splice(this.id.split('remove')[1], 1);
-            else
-                workTitles.pop();
-            toBeDeleted.style.transform = 'scale(0)';
-            localStorage.setItem('works', workTitles);
-
-            setTimeout(function () {
-                list.removeChild(toBeDeleted);
-            }, 1000);
-
-            if (workTitles.length == 0) {
-                document.getElementsByTagName('h4')[0].innerHTML = 'No Works to do.';
-            }
+// Function to update the list
+const renderWorks = function (checkAnim) {
+    list.textContent = "";
+    workTitles.forEach((workTitle, i) => {
+        if (checkAnim) {
+            addWork(workTitle, i, i === (workTitles.length - 1), false);
+        } else {
+            addWork(workTitle, i, false, false);
         }
-
-        span.appendChild(document.createTextNode('Done'));
-
-        entry.appendChild(span);
-        entry.id = 'item' + works;
-
-        let listitem = list.appendChild(entry);
-
-        listitem.onclick = function() {
-            if (workTitles.length != 1)
-                workTitles.splice(this.id.split('remove')[1], 1);
-            else
-                workTitles.pop();
-            listitem.style.transform = 'scale(0)'
-            localStorage.setItem('works', workTitles);
-
-            setTimeout(() => {
-                list.remove(listitem);
-            }, 1000);
-
-            if (workTitles.length == 0) {
-                document.getElementsByTagName('h4')[0].innerHTML = 'No Works to do.';
-            }
-        }
-
-        // Show animation when new work get added
-        let newWork = document.getElementById('item' + works);
-        setTimeout(function () {
-            newWork.style.transform = 'scale(1)';
-        }, 1);
-
-        works++;
     })
-} else {
-    document.getElementsByTagName('h4')[0].innerHTML = 'No Works to do.'
+
+    document.getElementsByTagName('h4')[0].textContent = workTitles.length === 0
+        ? "No works to do."
+        : "Works to do:"
+}
+
+// Function to add any work in list
+const addWork = function (title, i, anim, addStorage) {
+    let li = document.createElement('li');
+    let div = document.createElement('div');
+    let span = document.createElement('span');
+
+    li.id = 'item' + i;
+
+    div.className = 'works';
+    div.id = 'works' + i;
+    div.textContent = title;
+
+    span.className = 'works remove';
+    span.id = 'remove' + i;
+    span.textContent = 'Done';
+    span.addEventListener('click', () => removeWork(i));
+
+    li.appendChild(div);
+    li.appendChild(span);
+
+    list.appendChild(li);
+
+    if (anim) {
+        li.style.transform = 'scale(0)';
+        li.style.display = 'block';
+
+        setTimeout(function () {
+            li.style.transform = 'scale(1)';
+        }, 1)
+    } else {
+        li.style.display = 'block';
+    }
+
+    if (addStorage) {
+        workTitles.push(title);
+        setWorks();
+    }
+}
+
+// Function to prompt user to add new work.
+const promptNewWork = function () {
+    const newWork = prompt('Add new work.');
+
+    if (newWork)
+        workTitles.push(newWork)
+    else
+        console.log('Invalid Work');
+
+    setWorks();
+    renderWorks(true);
+}
+
+// Function to load works from localStorage.
+const getWorks = function () {
+    workTitles = 
+    localStorage.getItem('works').length > 0
+        ? localStorage.getItem('works').split(',')
+        : [];
+
+    workTitles.forEach((title, i) => {
+        addWork(title, i, true, false);
+    })
+
+    document.getElementsByTagName('h4')[0].textContent = workTitles.length > 0 
+        ? "Works to do:"
+        : "No works to do."
 }
 
 // ClickListener for addButton
-addButton.addEventListener('click', function() {
-    let currentTitle = prompt('Add your work here');
+addButton.addEventListener('click', () => promptNewWork());
 
-    // Check if value is not null
-    if (currentTitle) {
-        let entry = document.createElement('li');
+// Calling type() to start TypeWriter effect.
+type(title, "To-do Application", 250);
 
-        let div = document.createElement('div');
-        div.className = 'works';
-        div.id = 'works' + works;
-        div.appendChild(document.createTextNode(currentTitle[0].toUpperCase() + currentTitle.slice(1)));
-
-        entry.appendChild(div);
-
-        let span = document.createElement('span');
-        span.className = 'works remove'
-        span.id = 'remove' + works;
-
-        span.onclick = function() {
-            let toBeDeleted = document.getElementById('item' + this.id.split('remove')[1]);
-            if (workTitles.length != 1)
-                workTitles.splice(this.id.split('remove')[1], 1);
-            else
-                workTitles.pop();
-            toBeDeleted.style.transform = 'scale(0)';
-            localStorage.setItem('works', workTitles);
-
-            setTimeout(function () {
-                list.removeChild(toBeDeleted);
-            }, 1000);
-
-            if (workTitles.length == 0) 
-                document.getElementsByTagName('h4')[0].innerHTML = 'No Works to do.';
-
-        }
-
-        span.appendChild(document.createTextNode('Done'));
-
-        entry.appendChild(span);
-        entry.id = 'item' + works;
-
-        let listitem = list.appendChild(entry);
-
-        listitem.onclick = function() {
-            if (workTitles.length != 1)
-                workTitles.splice(this.id.split('remove')[1], 1);
-            else
-                workTitles.pop();
-            listitem.style.transform = 'scale(0)'
-            localStorage.setItem('works', workTitles);
-
-            setTimeout(() => {
-                list.remove(listitem);
-            }, 1000);
-
-            if (workTitles.length == 0) {
-                document.getElementsByTagName('h4')[0].innerHTML = 'No Works to do.';
-            }
-        }
-
-        // Show animation when work get added
-        let newWork = document.getElementById('item' + works);
-        setTimeout(function () {
-            newWork.style.transform = 'scale(1)';
-        }, 1);
-
-        works++;
-        workTitles.push(currentTitle);
-        document.getElementsByTagName('h4')[0].innerHTML = 'Works to do:'
-        localStorage.setItem('works', workTitles);
-    }
-})
+// Calling getWorks() to take works from localStorage
+getWorks();
