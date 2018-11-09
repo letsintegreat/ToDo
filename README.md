@@ -1,5 +1,5 @@
 # ToDo Application
-Here is a ToDo application designed with `HTML`, `CSS` and coded with core `JS`, all done by [HarshitSeksaria](https://github.com/HarshitSeksaria)
+Here is a ToDo application designed with `HTML`, `CSS` and coded with core `JS`, all done by [HarshitSeksaria](https://github.com/Zlytherin)
 
 In this ToDo Application every work gets added and removed with a cool animation, and the `UI` is also amazing.
 This application is created with keeping this point in mind that it should look cool in every display sizes and even on mobile devices.
