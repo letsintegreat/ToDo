@@ -125,8 +125,7 @@ const getWorks = function () {
     
     // Checking if localStorage.getItem() reuturns null
     if (localStorage.getItem('works')) {
-        workTitles = 
-        localStorage.getItem('works').length > 0
+        workTitles = localStorage.getItem('works').length > 0
             ? localStorage.getItem('works').split(',')
             : [];
     } else {
