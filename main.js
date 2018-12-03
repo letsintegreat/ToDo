@@ -122,10 +122,16 @@ const promptNewWork = function () {
 
 // Function to load works from localStorage
 const getWorks = function () {
-    workTitles = 
-    localStorage.getItem('works').length > 0
-        ? localStorage.getItem('works').split(',')
-        : [];
+    
+    // Checking if localStorage.getItem() reuturns null
+    if (localStorage.getItem('works')) {
+        workTitles = 
+        localStorage.getItem('works').length > 0
+            ? localStorage.getItem('works').split(',')
+            : [];
+    } else {
+        workTitles = [];
+    }
 
     workTitles.forEach((title, i) => {
         addWork(title, i, true, false);
