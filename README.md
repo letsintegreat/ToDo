@@ -17,6 +17,6 @@ So, the application has a button <kbd>Add work</kbd>, if the user clicks on that
 Then it shows that work on the screen and stores that work in `localStorage`.
 
 When the work is done then the user can hover over the work and can click on <kbd>Done</kbd> button. 
-Then the work gets removed from screen and from `localStorage`.
+Then the work gets removed from screen and from `localStorage` as well.
 
 And you can find this app in action on this [link](http://harshitseksaria9.000webhostapp.com). *The link is powered by [000webhost](https://www.000webhost.com/)*
